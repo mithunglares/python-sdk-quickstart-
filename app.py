@@ -1,3 +1,4 @@
+import requests  #pip install requests
 import os
 #Set enviroment Variable
 os.environ['AUTOWRAPT_BOOTSTRAP'] = 'autodynatrace'
@@ -30,6 +31,15 @@ def hello():
    else:
        print('Request for hello page received with no name or blank name -- redirecting')
        return redirect(url_for('index'))
+
+@app.route('/test', methods=['GET'])
+def test():
+   ploads = {'things':2,'total':25}
+   r = requests.get('https://httpbin.org/get',params=ploads)
+   print(r.text)
+   print(r.url)
+   return(r.text)
+
 
 
 if __name__ == '__main__':
