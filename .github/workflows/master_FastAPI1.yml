@@ -23,14 +23,14 @@ jobs:
       uses: docker/login-action@v1
       with:
         registry: https://mcr.microsoft.com/
-        username: ${{ secrets.AzureAppService_ContainerUsername_28c7c78fcc6540e79e17d98487510e80 }}
-        password: ${{ secrets.AzureAppService_ContainerPassword_898683ac968f41b7864d3f8634527217 }}
+        username: ${{ secrets.AzureAppService_ContainerUsername_ee9e7c6c74ef4d02b482782b43f9bbfe }}
+        password: ${{ secrets.AzureAppService_ContainerPassword_539eab7a5c3a4dc0884b1ba63fff5893 }}
 
     - name: Build and push container image to registry
       uses: docker/build-push-action@v2
       with:
         push: true
-        tags: mcr.microsoft.com/${{ secrets.AzureAppService_ContainerUsername_28c7c78fcc6540e79e17d98487510e80 }}/appsvc/staticsite:${{ github.sha }}
+        tags: mcr.microsoft.com/${{ secrets.AzureAppService_ContainerUsername_ee9e7c6c74ef4d02b482782b43f9bbfe }}/appsvc/staticsite:${{ github.sha }}
         file: ./Dockerfile
 
   deploy:
@@ -47,5 +47,5 @@ jobs:
       with:
         app-name: 'FastAPI1'
         slot-name: 'production'
-        publish-profile: ${{ secrets.AzureAppService_PublishProfile_087e5a7cc63e4899b3cc57c23f6d62d5 }}
-        images: 'mcr.microsoft.com/${{ secrets.AzureAppService_ContainerUsername_28c7c78fcc6540e79e17d98487510e80 }}/appsvc/staticsite:${{ github.sha }}'
+        publish-profile: ${{ secrets.AzureAppService_PublishProfile_058938d7bd624aadbcb454f692e36c7b }}
+        images: 'mcr.microsoft.com/${{ secrets.AzureAppService_ContainerUsername_ee9e7c6c74ef4d02b482782b43f9bbfe }}/appsvc/staticsite:${{ github.sha }}'
