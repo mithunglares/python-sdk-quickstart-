@@ -1,8 +1,11 @@
 import requests  #pip install requests
 import os
+import oneagent # SDK initialization functions#request attribute Config
+import oneagent.sdk as sdk # All other SDK functions.#request attribute Config
 #Set enviroment Variable
 os.environ['AUTOWRAPT_BOOTSTRAP'] = 'autodynatrace'
 import autodynatrace
+getsdk = oneagent.get_sdk # Just to make the code shorter.#request attribute Config
 
 print("imported AutoDynatrace")
 
@@ -23,7 +26,10 @@ def favicon():
 
 @app.route('/hello', methods=['POST'])
 def hello():
+   sdk = getsdk()#request attribute Config 
    name = request.form.get('name')
+   sdk.add_custom_request_attribute('User', name)#request attribute Config
+   
 
    if name:
        print('Request for hello page received with name=%s' % name)
