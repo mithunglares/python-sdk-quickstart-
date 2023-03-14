@@ -1,3 +1,4 @@
+import time
 import requests  #pip install requests
 import os
 import oneagent # SDK initialization functions#request attribute Config
@@ -13,6 +14,11 @@ from datetime import datetime
 from flask import Flask, render_template, request, redirect, url_for, send_from_directory
 app = Flask(__name__)
 
+@autodynatrace.trace("helloService","sampleSleepMethod")
+def sampleSleepMethod(fname):
+   print("{} is going to sleep for 15seconds".format(fname))
+   time.sleep (15)
+   
 
 @app.route('/')
 def index():
@@ -23,12 +29,13 @@ def index():
 def favicon():
     return send_from_directory(os.path.join(app.root_path, 'static'),
                                'favicon.ico', mimetype='image/vnd.microsoft.icon')
-
+@autodynatrace.trace("helloService")
 @app.route('/hello', methods=['POST'])
 def hello():
    sdk = getsdk()#request attribute Config 
    name = request.form.get('name')
    sdk.add_custom_request_attribute('User', name)#request attribute Config
+   sampleSleepMethod(name)
    
 
    if name:
